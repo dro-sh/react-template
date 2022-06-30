@@ -1,0 +1,26 @@
+{
+  "name": "home-react",
+  "version": "0.0.1",
+  "description": "Booker Home-React application",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development PORT=8001 concurrently --names tsc,esb -c green.bold,blue.bold --kill-others \"npm run bundle -- --dev\" \"tsc --watch\" ",
+    "build": "cross-env PORT=8001 concurrently --success --names tsc,esb -c green.bold,blue.bold tsc \"npm run bundle\" ",
+    "bundle": "node ./esbuild.config.mjs",
+    "clean": "rimraf public/dist"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/react": "^18.0.14",
+    "@types/react-dom": "^18.0.5",
+    "concurrently": "^7.2.2",
+    "esbuild": "^0.14.48",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "create-serve": "^1.0.1",
+    "cross-env": "^7.0.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
