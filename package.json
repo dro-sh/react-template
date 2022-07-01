@@ -3,14 +3,21 @@
   "version": "0.0.1",
   "description": "Booker Home-React application",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development PORT=8001 concurrently --names tsc,esb -c green.bold,blue.bold --kill-others \"npm run bundle -- --dev\" \"tsc --watch\" ",
+    "dev": "concurrently -n d: -c green.bold,blue.bold,magenta.bold,red.bold --kill-others npm:dev:*",
+    "dev:react": "cross-env NODE_ENV=development node ./esbuild.config.mjs",
+    "dev:server": "cross-env PORT=8001 NODE_ENV=development node --inspect --require ./build/server.js",
+    "dev:build": "cross-env NODE_ENV=development npm run build:server -- --watch",
+    "dev:tsc": "tsc --watch",
     "build": "cross-env NODE_ENV=production PORT=8001 concurrently --success --names tsc,esb -c green.bold,blue.bold tsc \"npm run bundle\" ",
+    "build:server": "esbuild --platform=node --format=cjs ./server.ts --outdir=build --bundle",
     "bundle": "node ./esbuild.config.mjs",
     "clean": "rimraf public/dist"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/koa": "^2.13.4",
+    "@types/koa-static": "^4.0.2",
     "@types/react": "^18.0.14",
     "@types/react-dom": "^18.0.5",
     "@types/react-helmet": "^6.1.5",
@@ -24,10 +31,13 @@
     "@fontsource/roboto": "^4.5.7",
     "@mui/icons-material": "^5.8.4",
     "@mui/material": "5.8.4",
-    "create-serve": "^1.0.1",
     "cross-env": "^7.0.3",
+    "koa": "^2.13.4",
+    "koa-logger": "^3.2.1",
+    "koa-static": "^5.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-helmet": "^6.1.0"
+    "react-helmet": "^6.1.0",
+    "react-router-dom": "^6.3.0"
   }
 }

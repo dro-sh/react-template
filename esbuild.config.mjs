@@ -1,5 +1,4 @@
 import esbuild from "esbuild";
-import serve, { error, log } from "create-serve";
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -7,7 +6,6 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const MODE = process.env.NODE_ENV || "development";
-const PORT = process.env.PORT || 8001;
 
 esbuild
   .build({
@@ -24,17 +22,8 @@ esbuild
     inject: [path.join(__dirname, "/react-shim.js")],
     watch: MODE === "development" && {
       onRebuild(err) {
-        serve.update();
-        err ? error("❌ Failed") : log("✅ Updated");
+        err ? console.error("❌ Failed") : console.log("✅ Updated");
       },
     },
   })
   .catch(() => process.exit(1));
-
-if (MODE === "development") {
-  serve.start({
-    port: PORT,
-    root: "./public",
-    live: true,
-  });
-}
